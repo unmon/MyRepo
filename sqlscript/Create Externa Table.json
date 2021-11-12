@@ -1,0 +1,17 @@
+{
+	"name": "Create Externa Table",
+	"properties": {
+		"content": {
+			"query": "CREATE EXTERNAL TABLE [dbo].[ExternalData]\n(\n\t [Name] NVARCHAR(100),\n\t [Mobile] NVARCHAR(100),\n\t [Email] NVARCHAR(100)\n)\nWITH\n(\n\tLOCATION = '/Data.csv',\n\tDATA_SOURCE = [ExtSource],\n\tFILE_FORMAT = [ExtFileFormat]\n)\n",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "azsqldbsynapse",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

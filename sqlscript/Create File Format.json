@@ -1,0 +1,17 @@
+{
+	"name": "Create File Format",
+	"properties": {
+		"content": {
+			"query": "CREATE EXTERNAL FILE FORMAT [ExtFileFormat] WITH\n(\n\tFORMAT_TYPE = DELIMITEDTEXT,\n\tFORMAT_OPTIONS (FIELD_TERMINATOR =',')\n)\n",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "azsqldbsynapse",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

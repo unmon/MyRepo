@@ -1,0 +1,31 @@
+{
+	"name": "DestSQLServerOnPrem",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "DestOnPremSqlServerLinkesService",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [
+			{
+				"name": "Name",
+				"type": "varchar"
+			},
+			{
+				"name": "Mobile",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "Email",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "DATA"
+		}
+	},
+	"type": "Microsoft.Synapse/workspaces/datasets"
+}

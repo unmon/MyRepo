@@ -1,0 +1,272 @@
+{
+	"name": "Consolidation Report Pipeline",
+	"properties": {
+		"activities": [
+			{
+				"name": "2 - Basic Inventory Consolidation",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "1 - Device and Patch Consolidation",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[dbo].[InventoryConsolidation_cr]",
+					"storedProcedureParameters": {
+						"InstanceID": {
+							"value": {
+								"value": "@pipeline().parameters.vInstanceID",
+								"type": "Expression"
+							},
+							"type": "Int32"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "DestOnPremSqlServerLinkesService",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "1 - Device and Patch Consolidation",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[dbo].[DeviceConsolidation_cr]",
+					"storedProcedureParameters": {
+						"InstanceID": {
+							"value": {
+								"value": "@pipeline().parameters.vInstanceID",
+								"type": "Expression"
+							},
+							"type": "Int32"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "DestOnPremSqlServerLinkesService",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "3 - Virtualization Info Consolidation",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "2 - Basic Inventory Consolidation",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[dbo].[VirtualizationConsolidation_cr]",
+					"storedProcedureParameters": {
+						"InstanceID": {
+							"value": {
+								"value": "@pipeline().parameters.vInstanceID",
+								"type": "Expression"
+							},
+							"type": "Int32"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "DestOnPremSqlServerLinkesService",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "4 - Clustering Info Consolidation",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "3 - Virtualization Info Consolidation",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[dbo].[ClusteringConsolidation_cr]",
+					"storedProcedureParameters": {
+						"InstanceID": {
+							"value": {
+								"value": "@pipeline().parameters.vInstanceID",
+								"type": "Expression"
+							},
+							"type": "Int32"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "DestOnPremSqlServerLinkesService",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "5 - User Info Consolidation",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "4 - Clustering Info Consolidation",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[dbo].[UserConsolidation_cr]",
+					"storedProcedureParameters": {
+						"InstanceID": {
+							"value": {
+								"value": "@pipeline().parameters.vInstanceID",
+								"type": "Expression"
+							},
+							"type": "Int32"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "DestOnPremSqlServerLinkesService",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "6 - Management Group Evaluation",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "5 - User Info Consolidation",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[dbo].[ManagementGroupEvaluation_cr]",
+					"storedProcedureParameters": {
+						"InstanceID": {
+							"value": {
+								"value": "@pipeline().parameters.vInstanceID",
+								"type": "Expression"
+							},
+							"type": "Int32"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "DestOnPremSqlServerLinkesService",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Fail Task",
+				"type": "Fail",
+				"dependsOn": [
+					{
+						"activity": "1 - Device and Patch Consolidation",
+						"dependencyConditions": [
+							"Failed"
+						]
+					},
+					{
+						"activity": "2 - Basic Inventory Consolidation",
+						"dependencyConditions": [
+							"Failed"
+						]
+					},
+					{
+						"activity": "3 - Virtualization Info Consolidation",
+						"dependencyConditions": [
+							"Failed"
+						]
+					},
+					{
+						"activity": "4 - Clustering Info Consolidation",
+						"dependencyConditions": [
+							"Failed"
+						]
+					},
+					{
+						"activity": "5 - User Info Consolidation",
+						"dependencyConditions": [
+							"Failed"
+						]
+					},
+					{
+						"activity": "6 - Management Group Evaluation",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"message": "Consolidation reports encountered error. Please check the engine logs",
+					"errorCode": "404"
+				}
+			}
+		],
+		"parameters": {
+			"vInstanceID": {
+				"type": "int",
+				"defaultValue": 1
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2021-11-08T12:05:43Z"
+	},
+	"type": "Microsoft.Synapse/workspaces/pipelines"
+}

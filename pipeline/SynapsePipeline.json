@@ -1,0 +1,80 @@
+{
+	"name": "SynapsePipeline",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy data from synapse to on-prem",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "SQL pool procedure to merge data",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlPoolSource",
+						"queryTimeout": "02:00:00"
+					},
+					"sink": {
+						"type": "SqlServerSink"
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "SqlPoolExtTableConn",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DestSQLServerOnPrem",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "SQL pool procedure to merge data",
+				"type": "SqlPoolStoredProcedure",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"sqlPool": {
+					"referenceName": "sqldw",
+					"type": "SqlPoolReference"
+				},
+				"typeProperties": {
+					"storedProcedureName": "[dbo].[sp_ExternalDataView]"
+				}
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2021-09-29T10:50:58Z"
+	},
+	"type": "Microsoft.Synapse/workspaces/pipelines"
+}

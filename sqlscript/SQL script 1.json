@@ -1,0 +1,17 @@
+{
+	"name": "SQL script 1",
+	"properties": {
+		"content": {
+			"query": "DROP EXTERNAL TABLE [dbo].[ExternalDataDD];\nGO\n\nDROP EXTERNAL DATA SOURCE ExtSourceDD;\nGO\n\nCREATE EXTERNAL DATA SOURCE ExtSourceDD WITH (\n    LOCATION = 'abfss://sql@azsynapseacn.dfs.core.windows.net',\n    --CREDENTIAL = sqlpoolcred,\n\tTYPE = HADOOP\n);\nGO\n\nDROP EXTERNAL FILE FORMAT FileFormatDD;\nGO\n\nCREATE EXTERNAL FILE FORMAT FileFormatDD\nWITH (  \n    FORMAT_TYPE = DELIMITEDTEXT,\n    FORMAT_OPTIONS ( FIELD_TERMINATOR = ',', STRING_DELIMITER = '\"', FIRST_ROW = 2   )\n);\nGO\n\nCREATE EXTERNAL TABLE [dbo].[ExternalDataDD]\n(\n\t [Name] NVARCHAR(100),\n\t [Mobile] NVARCHAR(100),\n\t [Email] NVARCHAR(100)\n)\nWITH\n(\n\tLOCATION = '/Data.csv',\n\tDATA_SOURCE = [ExtSourceDD],\n\tFILE_FORMAT = [FileFormatDD]\n)\nGO\n",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "sqldw",
+				"poolName": "sqldw"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

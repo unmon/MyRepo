@@ -1,0 +1,17 @@
+{
+	"name": "Create External Data Source",
+	"properties": {
+		"content": {
+			"query": "CREATE EXTERNAL DATA SOURCE [ExtSource] WITH\n(\n\tLOCATION = 'https://azsynapseacn.dfs.core.windows.net/sql'\n)\n",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "azsqldbsynapse",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}
