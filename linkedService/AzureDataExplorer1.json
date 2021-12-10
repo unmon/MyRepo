@@ -1,0 +1,15 @@
+{
+	"name": "AzureDataExplorer1",
+	"properties": {
+		"annotations": [],
+		"type": "AzureDataExplorer",
+		"typeProperties": {
+			"endpoint": "https://azdatexpcluster.centralindia.kusto.windows.net",
+			"database": "eventhubdb"
+		},
+		"connectVia": {
+			"referenceName": "AutoResolveIntegrationRuntime",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}
