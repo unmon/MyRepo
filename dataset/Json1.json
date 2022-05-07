@@ -1,0 +1,82 @@
+{
+	"name": "Json1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "HostServer",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "FileServerLocation",
+				"fileName": "sync.json"
+			}
+		},
+		"schema": {
+			"type": "object",
+			"properties": {
+				"name": {
+					"type": "string"
+				},
+				"dataSourceDisplayName": {
+					"type": "string"
+				},
+				"dataSourceType": {
+					"type": "string"
+				},
+				"dataSets": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"Name": {
+								"type": "string"
+							},
+							"Query": {
+								"type": "string"
+							},
+							"Schema": {
+								"type": "array",
+								"items": {
+									"type": "object",
+									"properties": {
+										"Name": {
+											"type": "string"
+										},
+										"Type": {
+											"type": "string"
+										},
+										"CanBeNull": {
+											"type": "boolean"
+										},
+										"IsKey": {
+											"type": "boolean"
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				"cycles": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"dataSets": {
+								"type": "array",
+								"items": {
+									"type": "string"
+								}
+							},
+							"periodSeconds": {
+								"type": "integer"
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
