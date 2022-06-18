@@ -17,7 +17,7 @@
 				"spark.dynamicAllocation.enabled": "false",
 				"spark.dynamicAllocation.minExecutors": "2",
 				"spark.dynamicAllocation.maxExecutors": "2",
-				"spark.autotune.trackingId": "ecf656fa-14cc-4cd9-b718-f1a84582c5e6"
+				"spark.autotune.trackingId": "9ee1b94d-57d9-43ba-b017-bf595e7a03ba"
 			}
 		},
 		"metadata": {
@@ -58,12 +58,26 @@
 				"source": [
 					"%%spark\r\n",
 					"\r\n",
-					"val df = spark.read.format(\"csv\").option(\"header\", true).load(\"abfs://sql@azsynapseacn.dfs.core.windows.net/Data.csv\")\r\n",
+					"//import org.apache.spark.sql.SparkSession\r\n",
+					"\r\n",
+					"//val session = SparkSession.builder().getOrCreate()\r\n",
+					"\r\n",
+					"//val df = session.read.format(\"csv\").option(\"header\", true).load(\"abfs://sql@azsynapseacn.dfs.core.windows.net/Data.csv\")\r\n",
+					"\r\n",
+					"val df = spark.read.json(\"abfs://sql@azsynapseacn.dfs.core.windows.net/Data1.json\").select(\"Name\", \"employeeBranch\")\r\n",
 					"\r\n",
 					"df.show()\r\n",
+					"\r\n",
+					"//df.printSchema()\r\n",
+					"\r\n",
+					"//df.show(false)\r\n",
+					"\r\n",
+					"//df.createOrReplaceTempView(\"vw_CsvData\")\r\n",
+					"\r\n",
+					"//spark.sql(\"Select * From vw_CsvData\").show()\r\n",
 					""
 				],
-				"execution_count": 18
+				"execution_count": 64
 			}
 		]
 	}
