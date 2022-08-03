@@ -2,15 +2,16 @@
 	"name": "Json1",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "HostServer",
+			"referenceName": "azsynapsewp-WorkspaceDefaultStorage",
 			"type": "LinkedServiceReference"
 		},
 		"annotations": [],
 		"type": "Json",
 		"typeProperties": {
 			"location": {
-				"type": "FileServerLocation",
-				"fileName": "sync.json"
+				"type": "AzureBlobFSLocation",
+				"fileName": "Data1.json",
+				"fileSystem": "sql"
 			}
 		},
 		"schema": {
