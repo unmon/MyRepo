@@ -1,0 +1,22 @@
+{
+	"name": "LakeDB",
+	"properties": {
+		"Name": "LakeDB",
+		"EntityType": "DATABASE",
+		"Origin": {
+			"Type": "SPARK"
+		},
+		"Properties": {
+			"IsSyMSCDMDatabase": true
+		},
+		"Source": {
+			"Provider": "ADLS",
+			"Location": "abfss://azsynapsefn@azsynapseacn.dfs.core.windows.net/Data",
+			"Properties": {
+				"FormatType": "parquet",
+				"LinkedServiceName": "azsynapsewp-WorkspaceDefaultStorage"
+			}
+		}
+	},
+	"type": "DATABASE"
+}
