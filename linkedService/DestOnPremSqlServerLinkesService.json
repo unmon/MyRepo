@@ -7,7 +7,7 @@
 		"typeProperties": {
 			"connectionString": "integrated security=True;data source=1EINTSTWKS1064\\MSSQLSERVER2019;initial catalog=SLA-Data",
 			"userName": "1E\\Unmon.Mukherjee",
-			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiIxMjFkZGQwMS1iNGY5LTQwNGItOTdjNy1lMjI1NDAzYjFhOGIiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiIyNmQyMjFhZi05ZmFjLTRkZjYtYjAyMS0wYTU1OWQ0Yjk5ZDciLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
 		},
 		"connectVia": {
 			"referenceName": "SelfHostedIR",
