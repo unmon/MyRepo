@@ -19,7 +19,7 @@
 		],
 		"typeProperties": {
 			"schema": "dbo",
-			"table": "DATA"
+			"table": "MapDeviceSoftware"
 		},
 		"sqlPool": {
 			"referenceName": "sqldw",
