@@ -22,10 +22,13 @@
 					},
 					"sink": {
 						"type": "SqlPoolSink",
+						"writeBatchSize": 5000000,
 						"writeBehavior": "Insert",
 						"sqlWriterUseTableLock": false
 					},
 					"enableStaging": false,
+					"parallelCopies": 8,
+					"dataIntegrationUnits": 8,
 					"translator": {
 						"type": "TabularTranslator",
 						"typeConversion": true,
