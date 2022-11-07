@@ -1,18 +1,11 @@
 {
-	"name": "SynapsePipeline",
+	"name": "Pipeline 1",
 	"properties": {
 		"activities": [
 			{
-				"name": "Copy data from synapse to on-prem",
+				"name": "Copy data1",
 				"type": "Copy",
-				"dependsOn": [
-					{
-						"activity": "SQL pool procedure to merge data",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
+				"dependsOn": [],
 				"policy": {
 					"timeout": "7.00:00:00",
 					"retry": 0,
@@ -53,31 +46,11 @@
 				]
 			},
 			{
-				"name": "SQL pool procedure to merge data",
-				"type": "SqlPoolStoredProcedure",
+				"name": "Data flow1",
+				"type": "ExecuteDataFlow",
 				"dependsOn": [],
 				"policy": {
-					"timeout": "7.00:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"sqlPool": {
-					"referenceName": "sqldw",
-					"type": "SqlPoolReference"
-				},
-				"typeProperties": {
-					"storedProcedureName": "[dbo].[sp_ExternalDataView]"
-				}
-			},
-			{
-				"name": "Notebook1",
-				"type": "SynapseNotebook",
-				"dependsOn": [],
-				"policy": {
-					"timeout": "7.00:00:00",
+					"timeout": "1.00:00:00",
 					"retry": 0,
 					"retryIntervalInSeconds": 30,
 					"secureOutput": false,
@@ -85,16 +58,18 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"notebook": {
-						"referenceName": "Notebook 1",
-						"type": "NotebookReference"
+					"dataflow": {
+						"referenceName": "Dataflow1",
+						"type": "DataFlowReference"
 					},
-					"snapshot": true
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
 				}
 			}
 		],
-		"annotations": [],
-		"lastPublishTime": "2021-09-29T10:50:58Z"
-	},
-	"type": "Microsoft.Synapse/workspaces/pipelines"
+		"annotations": []
+	}
 }
